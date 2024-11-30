@@ -1,0 +1,5 @@
+selenium == 4.26.0
+pytest == 8.3.3
+Faker == 9.2.0
+pytest-html == 4.1.1
+webdriver-manager == 133.0
