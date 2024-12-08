@@ -4,17 +4,22 @@ from selenium.webdriver.common.by import By
 import pytest
 import time
 from create_contact_function import generate_random_contact
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
 class TestContactPage():
     def setup_method(self, method):
         self.driver = webdriver.Firefox()
-        
+        #self.driver=webdriver.Chrome()
+        # options = webdriver.FirefoxOptions()
+        # self.driver = webdriver.Remote(
+        # command_executor="http://localhost:4444/wd/hub",options=options)
 
     def teardown_method(self, method):
         self.driver.quit()
         
     #testing adding a new contact and checking if all expected fields are visible and populated correctly
+
     def test_fields_visability_in_contact_page(self):
         contact=generate_random_contact()
         self.driver.get("https://thinking-tester-contact-list.herokuapp.com/")

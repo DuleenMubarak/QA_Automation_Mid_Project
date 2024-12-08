@@ -3,18 +3,25 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import pytest
 import time
-
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 class TestButtonsFuncionality():
+
     def setup_method(self, method):
         self.driver = webdriver.Firefox()
+        # self.driver=webdriver.Chrome()
+        # options = webdriver.FirefoxOptions()
+        # self.driver = webdriver.Remote(
+        # command_executor="http://localhost:4444/wd/hub",options=options)
         
 
     def teardown_method(self, method):
         self.driver.quit()
   
     #testing the submit button in log in page
+    
     def test_submit_button_login_page(self):
+
         self.driver.get("https://thinking-tester-contact-list.herokuapp.com/")
         self.driver.find_element(By.ID, "submit").click()
         assert self.driver.find_elements(By.ID, "error")

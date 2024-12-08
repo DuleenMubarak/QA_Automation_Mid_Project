@@ -5,15 +5,20 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from create_contact_function import generate_random_contact
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 
 class TestSignup():
     def setup_method(self, method):
         self.driver = webdriver.Firefox()
-        self.vars = {}
-    
+        #self.driver=webdriver.Chrome()
+        # options = webdriver.FirefoxOptions()
+        # self.driver = webdriver.Remote(
+        # command_executor="http://localhost:4444/wd/hub",options=options)
+        
     def teardown_method(self, method):
         self.driver.quit()
+
 #signing up with valid details   
     def test_valid_details_sign_up(self):
         contact=generate_random_contact()
@@ -42,19 +47,22 @@ class TestSignup():
         assert self.driver.find_element(By.ID, "error")
 
 #signing up with invalid password chars
+    @pytest.mark.demo
     @pytest.mark.xfail
     def test_invalid_chars_in_password_sing_up(self):
         contact=generate_random_contact()
         self.driver.get("https://thinking-tester-contact-list.herokuapp.com/")
         self.driver.maximize_window()
         self.driver.find_element(By.ID, "signup").click()
+        time.sleep(3)
         self.driver.find_element(By.ID, "firstName").send_keys(contact["first_name"])
         self.driver.find_element(By.ID, "lastName").send_keys(contact["last_name"])
         self.driver.find_element(By.ID, "email").send_keys(contact["email"])
-        self.driver.find_element(By.ID, "password").send_keys("djdjאאj")
+        self.driver.find_element(By.ID, "password").send_keys("djdj)(אאj")
         self.driver.find_element(By.ID, "submit").click()
         time.sleep(3)
         assert self.driver.find_element(By.ID, "error")
+        time.sleep(3)
 
 #signing up with invalid username
     @pytest.mark.xfail

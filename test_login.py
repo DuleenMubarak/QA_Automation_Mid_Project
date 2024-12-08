@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from create_contact_function import generate_random_contact
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
 
@@ -12,8 +13,14 @@ class TestLogin():
   def setup_method(self, method):
     self.driver = webdriver.Firefox()
     #self.driver = webdriver.Chrome()
-  
+    # options = webdriver.FirefoxOptions()
+    # self.driver = webdriver.Remote( 
+    # command_executor="http://localhost:4444/wd/hub",options=options)
 
+
+  def teardown_method(self, method):
+        self.driver.quit()
+      
   # test valid user details login
   def test_successful_login(self):
     self.driver.get("https://thinking-tester-contact-list.herokuapp.com/")
@@ -72,37 +79,3 @@ class TestLogin():
 
 
 
-
-
-
-
-
-
-"""
-#options - selenium Grid
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
-#from selenium.webdriver.chrome.options import Options as ChromeOptions
-options=FirefoxOptions()
-options.set_capability("browserVersion","132.0.2")
-options.set_capability("platformName","Windows")
-
-driver=webdriver.Remote("http://192.168.1.60:4444/",options=FirefoxOptions())
-driver.get("https://google.com")
-driver.maximize_window()
-time.sleep(5)
-print(driver.title)
-driver.quit
-
-#@pytest.fixture
-def driver():
-    #driver=webdriver.Chrome()
-    driver=webdriver.Firefox()
-    driver.maximize_window()
-    yield driver
-    #driver.quit()
-
-
-#print(generate_random_contacts(10))
-#@pytest.mark.parametrize("fist_name, last_name, birthday, email, phone, street_address_1, street_address_2,city, state, postal code, country",generate_random_contacts(100))
-
-"""
